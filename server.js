@@ -8,6 +8,12 @@ const app = express();
 // TODO: is this necessary?
 const db = require('./Develop/db/db.json');
 
+// parse incoming string or array data
+app.use(express.urlencoded({ extended: true }));
+// parse incoming JSON data
+app.use(express.json());
+// middleware - front-end access to public static resources
+app.use(express.static('public'));
 
 app.get('/api/db', (req, res) => {
     res.json(db);
