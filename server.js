@@ -15,11 +15,6 @@ app.use(express.json());
 // middleware - front-end access to public static resources
 app.use(express.static('public'));
 
-
-// used for initial testing of api route - similar to mod 11 proj set up
-// will create a route that the front-end can request data from - require the db.json file data
-// const db = require('./Develop/db/db.json');
-
 // API Routes start
 
     // GET /api/notes route will read the json object/'saved notes' in the db.json file, and will then return the json object/'saved notes' array if any
@@ -48,15 +43,17 @@ app.post('/api/notes', (req, res) => {
 
 // HTML Routes start
 
+    // GET
+app.get('/notes', (req, res) => {
+    res.sendFile(path.join(__dirname, './Develop/public/notes.html'))
+    // console.log("__dirname", __dirname)
+});
+
+app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, './Develop/public/index.html'))
+})
 
 // HTML Routes end
-
-
-
-// used for initial testing of api route - similar to mod 11 proj set up
-// app.get('/api/db', (req, res) => {
-//     res.json(db);
-// });
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
