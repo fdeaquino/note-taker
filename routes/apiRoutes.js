@@ -25,6 +25,23 @@ router.post('/notes', (req, res) => {
     // load notes from json into the array
     // find the id of note to delete and update the db.json object without the deleted note
     // display the updated note
+router.delete('/notes/:id', (req, res) => {
+    // identify the id of the note that will be deleted
+    let eraseThisNote = req.params.id;
+    // load notes from json into the array
+    let notesRead = JSON.parse(fs.readFileSync('./Develop/db/db.json'));
+    console.log("notesRead", notesRead); //current notes
+
+    // find the id of note to delete and update the db.json object without the deleted note
+    // look at all the note ids but don't include the id of the one we want to delete
+    let updatedNotes = notesRead.filter((notes) => notes.id !== eraseThisNote);
+    
+    console.log("updatedNotes", updatedNotes); //should result in an updated notes array without the note we want to delete
+    fs.writeFileSync('./Develop/db/db.json', JSON.stringify(updatedNotes));
+    // display the updated note
+    return res.json(updatedNotes);
+});
+
 
 // API Routes end
 
